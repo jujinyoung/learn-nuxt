@@ -16,6 +16,18 @@
                 {{ index + 1 }}. {{ course.title }}
               </q-item-section>
             </q-item>
+            <!-- 링크 추가 -->
+            <!-- 생략 -->
+<!--            <NuxtLink v-slot="{ navigate }" custom to="/course/prefetching-1">-->
+<!--              <q-item clickable @click="navigate()">Prefetching Test 1</q-item>-->
+<!--            </NuxtLink>-->
+<!--            <NuxtLink v-slot="{ navigate }" custom to="/course/prefetching-2">-->
+<!--              <q-item clickable @click="navigate()">Prefetching Test 2</q-item>-->
+<!--            </NuxtLink>-->
+<!--            <NuxtLink v-slot="{ navigate }" custom to="/course/prefetching-3">-->
+<!--              <q-item clickable @click="navigate()">Prefetching Test 3</q-item>-->
+<!--            </NuxtLink>-->
+            <!-- 생략 -->
           </q-list>
         </q-card>
       </div>
