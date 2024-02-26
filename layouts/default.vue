@@ -52,15 +52,39 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
+        <q-separator dark vertical />
+        <NuxtLink v-if="!isAuthenticated" v-slot="{ navigate }" custom to="/login">
+          <q-btn
+              stretch
+              flat
+              :label="$t('login')"
+              no-caps
+              @click="navigate()"
+          />
+        </NuxtLink>
+        <NuxtLink v-else v-slot="{ navigate }" custom to="/">
+          <q-btn
+              stretch
+              flat
+              :label="$t('logout')"
+              no-caps
+              @click="signOut()"
+          />
+        </NuxtLink>
       </q-toolbar>
     </q-header>
     <q-page-container :style="pageContainerStyle">
+      <q-banner v-if="isAuthenticated" class="bg-primary">
+        {{ authUser }}
+      </q-banner>
       <slot></slot>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
+const { authUser, isAuthenticated } = useAuthUser();
+const { signOut } = useAuth();
 const pageContainerStyle = computed(() => ({
   maxWidth: '1080px',
   margin: '0 auto',

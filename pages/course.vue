@@ -51,11 +51,11 @@ const { courses } = useCourses();
 const nuxtApp = useNuxtApp();
 
 // 1] $ 붙여서 사용
-console.log('nuxtApp.$hello: ', nuxtApp.$hello('gymcoding1'));
+// console.log('nuxtApp.$hello: ', nuxtApp.$hello('gymcoding1'));
 
 // 2] 구조분해할당
 const { $hello } = nuxtApp;
-console.log('$hello: ', $hello('gymcoding2'));
+// console.log('$hello: ', $hello('gymcoding2'));
 </script>
 
 <style scoped></style>
