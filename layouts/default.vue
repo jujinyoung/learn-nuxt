@@ -2,89 +2,94 @@
   <q-layout view="hHh lpR fFf" class="bg-grey-2">
     <q-header elevated class="bg-dark text-white">
       <q-toolbar>
-        <q-toolbar-title>Vue Master Course</q-toolbar-title>
-        <q-separator dark vertical />
-        <NuxtLink v-slot="{ navigate }" custom to="/">
-          <q-btn stretch flat :label="$t('home')" no-caps @click="navigate()" />
-        </NuxtLink>
-        <q-separator dark vertical />
-        <NuxtLink v-slot="{ navigate }" custom to="/about">
+<!--        <ClientOnly>-->
+          <q-toolbar-title>Vue Master Course</q-toolbar-title>
+          <q-separator dark vertical />
+          <NuxtLink v-slot="{ navigate }" custom to="/">
+            <q-btn stretch flat :label="$t('home')" no-caps @click="navigate()" />
+          </NuxtLink>
+          <q-separator dark vertical />
+          <NuxtLink v-slot="{ navigate }" custom to="/about">
+            <q-btn
+                stretch
+                flat
+                :label="$t('about')"
+                no-caps
+                @click="navigate()"
+            />
+          </NuxtLink>
+          <q-separator dark vertical />
           <q-btn
               stretch
               flat
-              :label="$t('about')"
+              :label="$t('youtube')"
               no-caps
-              @click="navigate()"
+              @click="moveYoutube"
           />
-        </NuxtLink>
-        <q-separator dark vertical />
-        <q-btn
-            stretch
-            flat
-            :label="$t('youtube')"
-            no-caps
-            @click="moveYoutube"
-        />
-        <q-separator dark vertical />
-        <NuxtLink v-slot="{ navigate }" custom to="/admin">
-          <q-btn
-              stretch
-              flat
-              :label="$t('admin')"
-              no-caps
-              @click="navigate()"
-          />
-        </NuxtLink>
-        <q-separator dark vertical />
-        <q-btn-dropdown stretch flat no-caps :label="selectedLanguageName">
-          <q-list padding dense>
-            <q-item
-                v-for="{ code, name } in languages"
-                :key="code"
-                v-close-popup
-                clickable
-                :active="code === $i18n.locale"
-                @click="$i18n.locale = code"
-            >
-              <q-item-section>
-                <q-item-label>{{ name }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
-        <q-separator dark vertical />
-        <NuxtLink v-if="!isAuthenticated" v-slot="{ navigate }" custom to="/login">
-          <q-btn
-              stretch
-              flat
-              :label="$t('login')"
-              no-caps
-              @click="navigate()"
-          />
-        </NuxtLink>
-        <NuxtLink v-else v-slot="{ navigate }" custom to="/">
-          <q-btn
-              stretch
-              flat
-              :label="$t('logout')"
-              no-caps
-              @click="signOut()"
-          />
-        </NuxtLink>
+          <q-separator dark vertical />
+          <NuxtLink v-slot="{ navigate }" custom to="/admin">
+            <q-btn
+                stretch
+                flat
+                :label="$t('admin')"
+                no-caps
+                @click="navigate()"
+            />
+          </NuxtLink>
+          <q-separator dark vertical />
+          <q-btn-dropdown stretch flat no-caps :label="selectedLanguageName">
+            <q-list padding dense>
+              <q-item
+                  v-for="{ code, name } in languages"
+                  :key="code"
+                  v-close-popup
+                  clickable
+                  :active="code === $i18n.locale"
+                  @click="$i18n.locale = code"
+              >
+                <q-item-section>
+                  <q-item-label>{{ name }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+          <q-separator dark vertical />
+          <NuxtLink v-if="!isAuthenticated" v-slot="{ navigate }" custom to="/login">
+            <q-btn
+                stretch
+                flat
+                :label="$t('login')"
+                no-caps
+                @click="navigate()"
+            />
+          </NuxtLink>
+          <NuxtLink v-else v-slot="{ navigate }" custom to="/">
+            <q-btn
+                stretch
+                flat
+                :label="$t('logout')"
+                no-caps
+                @click="signOut()"
+            />
+          </NuxtLink>
+<!--        </ClientOnly>-->
       </q-toolbar>
     </q-header>
     <q-page-container :style="pageContainerStyle">
-      <q-banner v-if="isAuthenticated" class="bg-primary">
-        {{ authUser }}
-      </q-banner>
-      <slot></slot>
+<!--      <ClientOnly>-->
+        <q-banner v-if="isAuthenticated" class="bg-primary">
+          {{ authUser }}
+        </q-banner>
+        <slot></slot>
+<!--      </ClientOnly>-->
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-const { authUser, isAuthenticated } = useAuthUser();
-const { signOut } = useAuth();
+const authStore = useAuthStore();
+const { user: authUser, isAuthenticated } = storeToRefs(authStore);
+const { signOut } = authStore;
 const pageContainerStyle = computed(() => ({
   maxWidth: '1080px',
   margin: '0 auto',
@@ -112,4 +117,6 @@ const { locale } = useI18n();
 const selectedLanguageName = computed(
     () => languages.value.find((lang) => lang.code === locale.value)?.name,
 );
+
+watch(locale, (val) => useCookie('locale').value = val);
 </script>

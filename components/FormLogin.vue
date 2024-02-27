@@ -19,11 +19,12 @@
 </template>
 
 <script setup lang="ts">
-const { signIn } = useAuth();
 const emit = defineEmits<{
   success: [];
 }>();
 // const emit = defineEmits(['success']);
+
+const { signIn } = useAuthStore();
 
 const form = ref({
   email: '',
