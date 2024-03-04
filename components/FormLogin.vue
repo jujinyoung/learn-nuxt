@@ -19,12 +19,12 @@
 </template>
 
 <script setup lang="ts">
+// const { signIn } = useAuth();
+const { signIn } = useAuthStore();
 const emit = defineEmits<{
   success: [];
 }>();
 // const emit = defineEmits(['success']);
-
-const { signIn } = useAuthStore();
 
 const form = ref({
   email: '',
@@ -32,13 +32,14 @@ const form = ref({
 });
 const error = ref<Error | null>(null);
 const loading = ref(false);
+watch(form, () => (error.value = null), { deep: true });
 
-const handleLoginSubmit = () => {
+const handleLoginSubmit = async () => {
   try {
     error.value = null;
     loading.value = true;
 
-    signIn(form.value.email, form.value.passwowrd);
+    await signIn(form.value.email, form.value.passwowrd);
 
     emit('success');
   } catch (err: unknown) {

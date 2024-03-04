@@ -21,3 +21,9 @@ export interface CourseWithPath
     path: string;
 }
 
+export interface CourseReturn {
+    course: Maybe<CourseWithPath>;
+    prevCourse: Maybe<CourseWithPath>;
+    nextCourse: Maybe<CourseWithPath>;
+}
+

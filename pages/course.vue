@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-const { courses } = useCourses();
+const { courses } = await useCourses();
 const nuxtApp = useNuxtApp();
 
 // 1] $ 붙여서 사용
