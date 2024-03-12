@@ -4,15 +4,25 @@
   </NuxtLayout>
 </template>
 <script setup lang="ts">
-// 1] useNuxtApp();
-const nuxtApp = useNuxtApp();
-console.log('nuxtApp: ', nuxtApp);
+const title = ref('Vue & Nuxt Mastery Class');
+const description = ref(
+    '짐코딩과 함께 Vue3 기초부터 실전, 활용! 그리고 Nuxt Framework 까지 함께 배워봐요!',
+);
+// useHead({
+//   title,
+//   meta: [{ name: 'description', content: description }],
+// });
 
-// 2] vue application instance
-// nuxtApp.vueApp.component() 전역 컴포넌트 등록
-// nuxtApp.vueApp.directive() 디렉티브 정의
-// nuxtApp.vueApp.use() Vue.js 플러그인 설치
-
-// 3] provide 활용
-// nuxtApp.provide('hello', (msg: string) => `Hello ${msg}`);
+useSeoMeta({
+  title,
+  titleTemplate: (titleChunk) =>
+      titleChunk
+          ? `${titleChunk} - 짐코딩 Vue & Nuxt 강의`
+          : `짐코딩 Vue & Nuxt 강의`,
+  description,
+  ogTitle: title,
+  ogDescription: description,
+  ogType: 'website',
+  ogImage: '/img/og-image.png',
+});
 </script>
