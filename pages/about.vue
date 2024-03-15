@@ -82,4 +82,7 @@ const { count, doubleCount } = storeToRefs(counterStore);
 
 const localStorageColor = useLocalStorage('color-key', null);
 const sessionStorageColor = useSessionStorage('color-key', null);
+
+const config = useRuntimeConfig();
+console.log('about config: ', config.public.clientConfigValue);
 </script>

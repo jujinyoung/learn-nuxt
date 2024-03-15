@@ -33,7 +33,8 @@ export default defineEventHandler(async (event) => {
 
    const { password: _password, ...userWithoutPassword} = userWithPassword;
 
-   setCookie(event, '_user', JSON.stringify(userWithoutPassword));
+   const config = useRuntimeConfig();
+   setCookie(event, config.authCookieName, JSON.stringify(userWithoutPassword));
 
    return {
        user: userWithoutPassword
